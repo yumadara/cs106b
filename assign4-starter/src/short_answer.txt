@@ -1,0 +1,51 @@
+Before submitting this file, make sure that there are no more TODO
+values left in the file (besides the one in this introduction of course).
+
+Warmup and Debugging Exercise
+-----------------------------
+Q1: What is the value of the totalMoves variable in hanoiAnimationafter stepping over the call to moveTower?
+A1: TODO
+
+Q2: What is the value of the totalMoves variable inside the first moveTower call after stepping over its first recursive sub-call? (In other words, just after stepping over the first recursive sub-call to moveTower inside the else statement in the recursive function.)
+A2: TODO
+
+Q3: After breaking at the base case of moveTower and then choosing Step Out, where do you end up? (What function are you in, and at what line number?) What is the value of the totalMoves variable at this point?
+A3: TODO
+
+Q4: What is the smallest possible input that triggers the bug?
+A4: TODO
+
+Q5: What is the one-character error in the program?
+A5: TODO
+
+Q6: Explain why that one-character bug causes the function to return the exact output you see when you feed in the input you provided in Q5. You should be able to specifically account for where things go wrong and how the place where the error occurs causes the result to change from “completely correct” to “terribly wrong.”
+A6: TODO
+
+
+Merge
+-----
+Q7: Give a rough estimate of the maximum length sequence that could be successfully merged on your system assuming a recursive implementation of binary merge.
+A7: TODO
+
+Q8: What would be the observed behavior if attempting to merge a sequence larger than that maximum?
+A8: TODO 
+
+Q9: Include the data from your execution timing and explain how is supports your Big O prediction for merge.
+A9: TODO
+
+Q10. Include the data from your execution timing and explain how it supports your Big O prediction for multiMerge.
+A10: TODO
+
+Q11: Include the data from your execution timing and explain how it supports O(n log k) behavior for recMultiMerge.
+A11: TODO
+
+Q12: Earlier you worked out how a recursive implementation of merge would limit the allowable input sequence length. Are the limits on the call stack also an issue for the recursive implementation of recMultiMerge? Explain why or why not.
+A12: TODO
+
+Voting
+------
+Q13: Include the data from your execution timing and explain how is supports your Big O prediction for computePowerIndex.
+A13: TODO
+
+Q14: Use the timing and Big O to predict how long it would take to compute the power index for the 51 voting blocks in the US electoral system.
+A14: TODO

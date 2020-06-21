@@ -1,0 +1,40 @@
+Before submitting this file, make sure that there are no more TODO
+values left in the file (besides the one in this introduction of course).
+
+Warmup and Debugging Exercise
+-----------------------------
+Q1. If looking at a call stack, what would be the indication that the program being debugged uses recursion?
+A1: TODO
+
+
+Q2: What is the value of parameter `n` at level 0 in the call stack? What is the highest numbered level shown in the call stack? (This gives a rough estimate of the capacity of the space set aside for the call stack on your system.)
+A2: TODO
+
+
+Q3:  Describe the difference in observed symptoms of a program that goes into an infinite loop versus one that goes into infinite recursion
+A3: TODO
+
+
+Q4. What are the specific values of base/exp that result in a test failure?
+A4: TODO
+
+
+Q5: Explain why removing the redundant base cases fixed the test failure.
+A5: TODO
+
+Q6: What is the result of attempting to compute 0 raised to a negative power without a special case for base == 0?
+A6: TODO
+
+
+Balance
+-------
+Q7. Compare your recursion solution to the iterative approach used for the check Balance problem in Section1. Which version do you find easier to write? to read? to confirm correct?
+A7: TODO 
+
+Sierpinski
+-----------
+Q8.  Without automated unit tests, you need to develop new techniques for test coverage. What were the strategies you used for testing Sierpinski?
+A8: TODO
+
+
+
