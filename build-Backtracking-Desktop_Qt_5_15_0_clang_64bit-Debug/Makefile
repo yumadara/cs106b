@@ -425,7 +425,7 @@ TARGET        = ../assign4-starter/Backtracking.app/Contents/MacOS/Backtracking
 
 ####### Custom Variables
 EXPORT_QMAKE_MAC_SDK = macosx
-EXPORT_QMAKE_MAC_SDK_VERSION = 10.15.4
+EXPORT_QMAKE_MAC_SDK_VERSION = 10.15.6
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
 EXPORT_VALID_ARCHS = x86_64
 EXPORT_ACTIVE_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(ARCHS))

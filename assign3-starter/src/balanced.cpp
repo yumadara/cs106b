@@ -16,58 +16,77 @@ bool isBalanced(string str) {
 
 // TODO: Add a function header comment here to explain the
 // behavior of the function and how you implemented this behavior
+string operatorsOnlyhelper(string s, int index)
+{
+    string res;
+    if (index == s.length())
+    {
+        return res;
+    }
+    else{
+        if (s[index]=='('  || s[index]==')' || s[index]=='[' || s[index]==']' || s[index]=='{' ||s[index]=='}')
+        {
+            res+= s[index];
+            index++;
+            return res+operatorsOnlyhelper(s, index);
+
+        }
+        else{
+            index++;
+            return res + operatorsOnlyhelper(s, index);
+
+        }
+    }
+    return res;
+}
 string operatorsOnly(string s)
 {
     // TODO your code here
-    //string copy=s;
-    if (s.length()==0)
-    {
-    }
-    else{
-        if(s[0]=='{' || s[0]=='}' ||s[0]=='(' ||s[0]==')' || s[0]=='[' ||s[0] == ']' )
-        {
-            string substring=s.substr(1,string::npos-1);
-            s= s[0] + operatorsOnly(substring);
-            return s;
-        }
-        else{
-            string substring=s.substr(1,string::npos-1);
-            s=operatorsOnly(substring);
-            return s;
-        }
-    }
-    return s;
+    // process the first character of the string and seee if it should be kept
+    // recursively process the rest of the string
+
+    return operatorsOnlyhelper(s, 0);
+
+
 }
 
 // TODO: Add a function header comment here to explain the
 // behavior of the function and how you implemented this behavior
-bool checkOperators(string s)
-{
-    // TODO your code here
-    if (s.length()==0)
-    {
+bool checkOperatorshelper(string s, int index){
+    if (s.length() ==0){
         return true;
     }
-    else if(s.length()==1)
+    else if (s.length() ==1)
     {
         return false;
     }
     else{
-        for(int i=0; i<s.length()-1; i++)
+        if (index >-1 && index< s.length())
         {
-            if((s[i]== '(' && s[i+1] ==')') ||(s[i] =='{' && s[i+1] =='}') ||( s[i]=='[' && s[i+1]== ']'))
-            {
-                s.erase( s.begin()+i);
-                s.erase( s.begin()+i);
-                bool a = checkOperators( s);
-                //break;
-                return a;
-            }
+            if (    (s[index] =='(' && s[index +1]== ')') ||
+                        (s[index] =='[' && s[index +1]== ']') ||
+                        (s[index] =='{' && s[index +1]== '}')
+                         )
+                {
+                    s=s.erase(index,2);
 
+                    return checkOperatorshelper(s, 0);
+                }
+                else{
+                    index ++;
+                    return checkOperatorshelper(s, index);
+                }
         }
-        return false;
     }
 
+    return false;
+}
+bool checkOperators(string s)
+{
+    // TODO your code here
+    // string is empty
+
+    return checkOperatorshelper(s, 0);
 }
 
 
@@ -76,7 +95,6 @@ bool checkOperators(string s)
 PROVIDED_TEST("operatorsOnly on example from writeup")
 {
     string example ="int main() { int x = 2 * (vec[2] + 3); x = (1 + random()); }";
-
     string only = "(){([])(())}";
     EXPECT_EQUAL(operatorsOnly(example), only);
 }
@@ -84,31 +102,7 @@ PROVIDED_TEST("operatorsOnly on example from writeup")
 PROVIDED_TEST("checkOperators on example from writeup")
 {
     string only = "(){([])(())}";
-    //string only= "[](){][}";
     EXPECT(checkOperators(only));
-}
-
-PROVIDED_TEST("checkOperators on example from writeup")
-{
-    //string only = "(){([])(())}";
-    string only= "[](){][}";
-    EXPECT(!checkOperators(only));
-}
-
-PROVIDED_TEST("checkOperators on example from writeup")
-{
-    //string only = "(){([])(())}";
-    //string only= "[](){][}";
-    string only="([)";
-    EXPECT(!checkOperators(only));
-}
-
-PROVIDED_TEST("checkOperators on example from writeup")
-{
-    //string only = "(){([])(())}";
-    //string only= "[](){][}";
-    string only="{(][][)}";
-    EXPECT(!checkOperators(only));
 }
 
 PROVIDED_TEST("isBalanced on example from writeup")

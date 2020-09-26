@@ -10,22 +10,111 @@
 #include "set.h"
 #include "lexicon.h"
 #include "testing/SimpleTest.h"
-#include <vector>
 using namespace std;
 
-int score=0;
+
 int points(string str)
 {
     // TODO your code here
-    int len=str.length();
-    if (len< 3)
+        if (str.length() < 4)
+        {
+            return 0;
+        }
+        return str.length()-3;
+        //return 0;
+}
+
+void scoreBoardhelper(Grid<char>& board, Lexicon& lex, Vector<GridLocation> vec, Vector<char>& choosen, Vector<int>& score, string sofar)
+{
+    if ( lex.contains(sofar)){
+        int point = points(sofar);
+        score.add(point);
+    }
+    if (lex.containsPrefix(sofar))
     {
-         return 0;
+        GridLocation loc = vec.back();
+        for (GridLocation nbr: loc.neighbors())
+        {
+
+            if ((nbr.col>-1) && (nbr.row >-1) && nbr.row<board.numRows() && nbr.col< board.numCols())
+            {
+                int row_for_nbr = nbr.row;
+                int col_for_nbr= nbr.col;
+                char nbr2char = board[row_for_nbr][col_for_nbr];
+
+                string nbr2str = "";
+                nbr2str+= nbr2char;
+
+                // check if it is a marked grid
+                if (!choosen.contains(nbr2char))
+                {
+                     choosen.add(nbr2char);
+                     vec.add(nbr);
+                    string check = sofar + nbr2str;
+                    if (lex.containsPrefix(check))
+                     {
+                        scoreBoardhelper(board, lex, vec, choosen, score, check);
+                    }
+                    else
+                    {
+                        choosen.removeBack();
+                    }
+                }
+
+            }
+
+    }
     }
     else
     {
-        return len-3;
+        for (GridLocation loc : board.locations())
+        {
+
+            char loc2char = board[loc.row][loc.col];
+
+            string loc2str = "";
+            loc2str+=loc2char;
+
+            choosen.add(loc2char);
+            vec.add(loc);
+
+            sofar = loc2str;
+
+           for (GridLocation nbr: loc.neighbors())
+           {
+
+               if ((nbr.col>-1) && (nbr.row >-1) && nbr.row<board.numRows() && nbr.col< board.numCols())
+               {
+                   int row_for_nbr = nbr.row;
+                   int col_for_nbr= nbr.col;
+                   char nbr2char = board[row_for_nbr][col_for_nbr];
+
+                   string nbr2str = "";
+                   nbr2str+= nbr2char;
+
+                   // check if it is a marked grid
+                   if (!choosen.contains(nbr2char))
+                   {
+                        choosen.add(nbr2char);
+                        vec.add(nbr);
+                       string check = sofar + nbr2str;
+                       if (lex.containsPrefix(check))
+                        {
+                           scoreBoardhelper(board, lex, vec, choosen, score, check);
+                       }
+                       else
+                       {
+                           choosen.removeBack();
+                       }
+                   }
+
+               }
+
+           }
+        }
     }
+
+
 
 }
 
@@ -33,28 +122,17 @@ int points(string str)
 // behavior of the function and how you implemented this behavior
 int scoreBoard(Grid<char>& board, Lexicon& lex)
 {
+        Vector<int> score;
+        Vector<char> choosen;
+        Vector<GridLocation> vec;
+        int sum = 0;
+        scoreBoardhelper(board, lex, vec, choosen, score,"");
+        while (score.size() > 0) {
 
-}
-int scoreBoardHelper(Grid<char>& board, Lexicon& lex,string former)
-{
-    // TODO your code here
-    //score++;
-
-    for(int i=0; i<board.numRows(); i++)
-    {
-        for (int j=0; j<board.numCols(); j++)
-        {
-            GridLocation loc(i,j);
-            for(GridLocation nbr: loc.neighbors())
-            {
-
-            }
-
-
+            sum+= score.pop_front();
         }
-    }
 
-    return 0;
+        return sum;
 }
 
 /* * * * * * Test Cases * * * * * */
@@ -81,7 +159,7 @@ PROVIDED_TEST("Test point scoring") {
     EXPECT_EQUAL(points("seventh"), 4);
     EXPECT_EQUAL(points("supercomputer"), 10);
 }
-
+/*
 PROVIDED_TEST("Test scoreBoard, board contains no words, score of zero") {
     Grid<char> board = {{'B','C','D','F'}, //no vowels, no words
                         {'G','H','J','K'},
@@ -89,6 +167,7 @@ PROVIDED_TEST("Test scoreBoard, board contains no words, score of zero") {
                         {'Q','R','S','T'}};
     EXPECT_EQUAL(scoreBoard(board, sharedLexicon()), 0);
 }
+
 
 PROVIDED_TEST("Test scoreBoard, board contains one word, score of 1") {
     Grid<char> board = {{'C','_','_','_'},
@@ -105,7 +184,7 @@ PROVIDED_TEST("Test scoreBoard, alternate paths for same word, still score of 1"
                         {'R','_','R','_'}};
     EXPECT_EQUAL(scoreBoard(board, sharedLexicon()), 1);
 }
-
+*/
 PROVIDED_TEST("Test scoreBoard, small number of words in corner of board") {
     Grid<char> board = {{'L','I','_','_'},
                         {'M','E','_','_'},

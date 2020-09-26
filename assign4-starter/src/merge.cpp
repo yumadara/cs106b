@@ -10,72 +10,55 @@ using namespace std;
 
 // TODO: Add a function header comment here to explain the
 // behavior of the function and how you implemented this behavior
+bool mergeChecker(Queue<int> a){
+    Queue<int> b=a;
+    if (b.size()!=0)
+    {
+        int min=b.peek();
+        while(b.size()!=0)
+        {
+
+            if(b.peek()< min){
+                error("This queue is not sorted in order!");
+                return false;
+            }
+            min = b.dequeue();
+
+        }
+    }
+
+    return true;
+}
 Queue<int> merge(Queue<int> a, Queue<int> b)
 {
     Queue<int> result;
     // TODO your code here
-    // check error
-    Queue<int> copy_a=a;
-    Queue<int> copy_b=b;
-    int max_a = -100000 ;
-    int max_b = -100000 ;
-    while (!copy_a.isEmpty()) {
-        int s= copy_a.dequeue();
-        if (s>= max_a)
+    if (mergeChecker(a) && mergeChecker(b)){
+        while (a.size()!=0 && b.size()!=0){
+            int ele = a.peek() > b.peek() ? b.dequeue() : a.dequeue();
+            result.add(ele);
+        }
+        while (a.size()!=0)
         {
-            max_a= s;
+            result.add(a.dequeue());
         }
-        else{
-            error("Queue a is not sorted in order");
-        }
-    }
-
-    while (!copy_b.isEmpty()) {
-        int s= copy_b.dequeue();
-        if (s>= max_b)
+        while (b.size()!=0)
         {
-            max_b= s;
+            result.add(b.dequeue());
         }
-        else{
-            error("Queue b is not sorted in order");
-        }
-    }
-
-    // principle part
-    while(!a.isEmpty() && !b.isEmpty())
-    {
-        int x = a.peek();
-        int y = b.peek();
-        int s=0;
-        if( x>y) s=y;
-        else s =x;
-
-        result.enqueue(s);
-        if( x>y )
-        {
-            b.remove();
-        }
-        else a.remove();
-    }
-    while(!a.isEmpty())
-    {
-        result.enqueue(a.dequeue());
-    }
-
-    while (!b.isEmpty())
-    {
-        result.enqueue(b.dequeue());
-    }
+}
     return result;
 }
 
 Queue<int> multiMerge(Vector<Queue<int>>& all)
 {
     Queue<int> result;
-
-    for (Queue<int>& q : all) {
-           result = merge(q, result);
+    if (all.size()!=0) {
+        for (Queue<int>& q : all) {
+               result = merge(q, result);
+        }
     }
+
     return result;
 }
 
@@ -85,20 +68,7 @@ Queue<int> recMultiMerge(Vector<Queue<int>>& all)
 {
     Queue<int> result;
     // TODO your code here
-    // base case
-    if (all.size()==1){
-        result= multiMerge(all);
-    }
 
-    else{
-        int k= all.size();
-        Vector<Queue<int>> left= all.subList(0,int(k/2));
-        Vector<Queue<int>> right= all.subList(int(k/2),k-int(k/2));
-        Queue<int> result_left= recMultiMerge(left);
-        Queue<int> result_right= recMultiMerge(right);
-
-        result= merge(result_left, result_right);
-    }
     return result;
 }
 
@@ -116,6 +86,15 @@ PROVIDED_TEST("Test binary merge, two short sequences") {
     EXPECT_EQUAL(merge(b, a), expected);
 }
 
+PROVIDED_TEST("Test binary merge, two short sequences") {
+    Queue<int> a = {2, 4, 5,7};
+    Queue<int> b = {1, 3, 3,8, 10};
+    Queue<int> expected = {1, 2, 3, 3, 4, 5, 7, 8, 10};
+    EXPECT_EQUAL(merge(a, b), expected);
+    EXPECT_EQUAL(merge(b, a), expected);
+}
+
+
 PROVIDED_TEST("Test multiMerge, small collection of short sequences") {
     Vector<Queue<int>> all = {{3, 6, 9, 9, 100},
                              {1, 5, 9, 9, 12},
@@ -125,8 +104,7 @@ PROVIDED_TEST("Test multiMerge, small collection of short sequences") {
                              {3402}
                             };
     Queue<int> expected = {-5, -5, 1, 3, 5, 5, 6, 9, 9, 9, 9, 12, 100, 3402};
-    //EXPECT_EQUAL(multiMerge(all), expected);
-    EXPECT_EQUAL(recMultiMerge(all),expected);
+    EXPECT_EQUAL(multiMerge(all), expected);
 }
 
 PROVIDED_TEST("Test recMultiMerge by compare to multiMerge") {

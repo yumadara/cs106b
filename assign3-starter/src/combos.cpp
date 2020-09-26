@@ -25,15 +25,25 @@ int combo_formula(int n, int k)
 int count_combos(int n, int k)
 {
     //TODO your code here
-    if( n==k )
+    // if the red dot is chosen
+    if (!(n<k) && !( n<0) && !(k<0))
+    {
+        if(n==k)
+        {
+            return 1;
+        }
+        else
+        {
+            return count_combos(n-1,k) + count_combos(n-1, k-1);
+        }
+        //return 0;
+    }
+    else
     {
         return 0;
     }
-    else{
 
-    }
 
-    return 0;
 }
 
 

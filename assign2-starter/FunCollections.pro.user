@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.12.1, 2020-06-04T21:57:51. -->
+<!-- Written by QtCreator 4.12.1, 2020-09-04T22:25:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -57,7 +57,7 @@
   <valuemap type="QVariantMap">
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
-   <value type="QString" key="ClangCodeModel.WarningConfigId">{412822dd-c127-471e-9ffa-121406e97494}</value>
+   <value type="QString" key="ClangCodeModel.WarningConfigId">Builtin.Questionable</value>
    <valuemap type="QVariantMap" key="ClangTools">
     <value type="bool" key="ClangTools.BuildBeforeAnalysis">true</value>
     <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.DefaultTidyAndClazy</value>
